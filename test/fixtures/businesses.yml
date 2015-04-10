@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  location_lng: 1.5
+  location_lat: 1.5
+  branch: MyText
+  address: MyText
+
+two:
+  name: MyText
+  location_lng: 1.5
+  location_lat: 1.5
+  branch: MyText
+  address: MyText
