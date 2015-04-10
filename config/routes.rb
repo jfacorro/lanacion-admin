@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
+  get '/api/geo/:latitud/:longitud/[:distancia]' => 'api_promos#find_by_location'
+  get '/api/categoria/:categoria' => 'api_promos#find_by_category'
+  get '/api/beneficio/:id' => 'api_promos#find_by_id'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

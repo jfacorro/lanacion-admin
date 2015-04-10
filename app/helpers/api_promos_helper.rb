@@ -1,0 +1,2 @@
+module ApiPromosHelper
+end
