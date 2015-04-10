@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  description: MyText
+  category_id: 
+  subcategory_id: 
+  card: MyText
+  promo_type_id: 
+
+two:
+  name: MyText
+  description: MyText
+  category_id: 
+  subcategory_id: 
+  card: MyText
+  promo_type_id: 
