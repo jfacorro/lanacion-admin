@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
-  get '/api/geo/:latitud/:longitud/[:distancia]' => 'api_promos#find_by_location'
+  get '/api/geo/:latitud/:longitud(/:distancia)', :to => 'api_promos#find_by_location', :constraints => {:latitud => /\-*\d+.\d+/ , :longitud => /\-*\d+.\d+/ , :distancia => /\d+/}
   get '/api/categoria/:categoria' => 'api_promos#find_by_category'
   get '/api/beneficio/:id' => 'api_promos#find_by_id'
 

@@ -6,12 +6,21 @@ class ApiPromosController < ApplicationController
 
   def find_by_category
     category = Category.where('name = ?', params[:categoria]).first
-    promos = Promo.where('category_id = ?', category.id)
+    promos = Promo.where('category_id = ? AND ? BETWEEN date_from AND date_to', category.id, Time.now)
     render json: promos.map { |p| format_promo(p) }
   end
 
   def find_by_location
-    promos = Promo.where('id = ?', params[:id])
+    distance = (params[:distancia] == nil ? params[:distancia] : 200) / 1000
+    lat = params[:latitud].to_f
+    lng = params[:longitud].to_f
+
+    delta_lat = (distance / 6378) * (180 / Math::PI);
+    delta_lng = (distance / 6378) * (180 / Math::PI) / Math.cos(lat * Math::PI / 180);
+
+    promos = Promo.where('(? BETWEEN date_from AND date_to)', Time.now).business.where('AND (location_lat BETWEEN ? AND ?) AND (location_lng BETWEEN ? AND ?)', lat - delta_lat, lat + delta_lat, lng - delta_lng, lng + delta_lng)
+    # location = 'AND (location_lat BETWEEN ? AND ?) AND (location_lng BETWEEN ? AND ?)'
+    # bla = lat - delta_lat, lat + delta_lat, lng - delta_lng, lng + delta_lng
     render json: promos.map { |p| format_promo(p) }
   end
 
