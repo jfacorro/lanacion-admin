@@ -35,8 +35,7 @@ class ApiPromosController < ApplicationController
                      :description => promo.description,
                      :categoria => promo.category.name,
                      :subcategoria => promo.subcategory.name,
-                     :tarjeta => promo.card
-                    }
+                     :tarjeta => promo.card}
     }
   end
 end
