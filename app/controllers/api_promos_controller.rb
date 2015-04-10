@@ -18,9 +18,7 @@ class ApiPromosController < ApplicationController
     delta_lat = (distance / 6378) * (180 / Math::PI);
     delta_lng = (distance / 6378) * (180 / Math::PI) / Math.cos(lat * Math::PI / 180);
 
-    promos = Promo.where('(? BETWEEN date_from AND date_to)', Time.now).business.where('AND (location_lat BETWEEN ? AND ?) AND (location_lng BETWEEN ? AND ?)', lat - delta_lat, lat + delta_lat, lng - delta_lng, lng + delta_lng)
-    # location = 'AND (location_lat BETWEEN ? AND ?) AND (location_lng BETWEEN ? AND ?)'
-    # bla = lat - delta_lat, lat + delta_lat, lng - delta_lng, lng + delta_lng
+    promos = Promo.joins(:business).where('(? BETWEEN date_from AND date_to) AND (location_lat BETWEEN ? AND ?) AND (location_lng BETWEEN ? AND ?)', Time.now, lat - delta_lat, lat + delta_lat, lng - delta_lng, lng + delta_lng)
     render json: promos.map { |p| format_promo(p) }
   end
 
