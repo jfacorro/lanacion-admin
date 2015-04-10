@@ -11,7 +11,8 @@ class ApiPromosController < ApplicationController
   end
 
   def find_by_location
-    render json: Promo.where('id = ?', params[:id])
+    promos = Promo.where('id = ?', params[:id])
+    render json: promos.map { |p| format_promo(p) }
   end
 
   private
@@ -21,9 +22,9 @@ class ApiPromosController < ApplicationController
       :id => promo.id,
       :point => [promo.business.location_lng,
                  promo.business.location_lat],
-      :imagen => "bla",
-      :hasta => "bla",
-      :desde => "bla",
+      :imagen => promo.business.image,
+      :hasta => promo.date_from,
+      :desde => promo.date_to,
       :establecimiento => {:id => promo.business.id,
                            :nombre => promo.business.name,
                            :sucursal => promo.business.branch,
