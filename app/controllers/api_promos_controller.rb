@@ -14,8 +14,11 @@ class ApiPromosController < ApplicationController
     lat = params[:latitud].to_f
     lon = params[:longitud].to_f
     distance = (params[:distancia].nil? ? params[:distancia] : 200) / 1000
-    businesses = Business.within(distance, origin: [lat, lon])
-    promos = Promo.where(business_id: businesses.collect(&:id)) #.active
+    promos = Promo.within(distance, origin: [lat, lon])
+    # if promos.size < 20
+    #   api_promos = Promo.from_api(distance, lat, lon)
+    #   promos += api_promos
+    # end
     render json: promos.map { |p| format_promo(p) }
   end
 
@@ -24,18 +27,17 @@ class ApiPromosController < ApplicationController
     {
       :_id => promo.lanacionid,
       :id => promo.id.to_s,
-      :point => [promo.business.location_lat,
-                 promo.business.location_lng],
+      :point => [promo.lat, promo.lon],
       :imagen => promo.image,
       :desde => promo.date_from,
       :hasta => promo.date_to,
-      :establecimiento => {:id => promo.business.id,
-                           :nombre => promo.business.name,
-                           :sucursal => promo.business.branch,
-                           :direccion => promo.business.address},
+      :establecimiento => {:id => promo.business_id,
+                           :nombre => promo.business_name,
+                           :sucursal => promo.business_branch,
+                           :direccion => promo.business_address},
       :beneficio => {:id => promo.id,
                      :tipo => promo.ptype,
-                     :nombre => promo.business.name,
+                     :nombre => promo.business_name,
                      :descripcion => promo.description,
                      :categoria => promo.category.name,
                      :subcategoria => promo.subcategory,

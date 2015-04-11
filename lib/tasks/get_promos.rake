@@ -1,6 +1,6 @@
 namespace :lanacion do
   desc "Get promos from the LaNacion ugly api"
-  task promos_by_category: [:environment] do
+  task promos_by_categories: [:environment] do
     url = "http://23.23.128.233:8080/api/categoria/"
     puts "starting... hold on!"
     Category.find_each do |category|
@@ -24,34 +24,22 @@ namespace :lanacion do
         print "."
         process_url(url + "-34.#{600 - lat_decimal}/-58.#{450 - lon_decimal}/1000")
       end
-      puts "stats: business -> #{Business.count} - promos -> #{Promo.count}"
+      puts "stats: promos -> #{Promo.count}"
     end
     
     puts "done."
   end
 
   def process_url(url)
-    response = HTTParty.get(url)
+    response = HTTParty.get(URI.escape(url))
     body = JSON.parse(response.body)
-    # puts "I found #{body.size} promos"
     body.each do |promo|
       establecimiento = promo["establecimiento"]
-      unless business = Business.where(id: establecimiento["id"]).first
-        # puts "creating business #{establecimiento["nombre"]}"
-        lat, lon = promo["point"]
-        business = Business.create(
-          id: establecimiento["id"],
-          name: establecimiento["nombre"],
-          branch: establecimiento["sucursal"],
-          address: establecimiento["direccion"],
-          location_lng: lon,
-          location_lat: lat
-        )
-      end
-      
-      Promo.create(
-        lanacionid: promo["_id"],
-        business: business,
+      lat, lon = promo["point"]
+      e = Promo.create(
+        lanacionid: promo["id"],
+        lat: lat.to_f,
+        lon: lon.to_f,
         image: promo["imagen"],
         date_from: promo["desde"],
         date_to: promo["hasta"],
@@ -59,8 +47,16 @@ namespace :lanacion do
         description: promo["beneficio"]["descripcion"],
         subcategory: promo["beneficio"]["subcategoria"],
         card: promo["beneficio"]["tarjeta"],
+        business_id: establecimiento["id"],
+        business_name: establecimiento["nombre"],
+        business_branch: establecimiento["sucursal"],
+        business_address: establecimiento["direccion"],
         category: Category.where(name: promo["beneficio"]["categoria"]).first
       )
+
+      unless e.errors.to_a.empty?
+        puts "e.errors -> #{e.errors.to_a}"
+      end
     end
   end
 end

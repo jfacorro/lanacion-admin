@@ -34,24 +34,15 @@ ActiveRecord::Schema.define(version: 20150411045707) do
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
-  create_table "businesses", force: true do |t|
-    t.text     "name"
-    t.float    "location_lng"
-    t.float    "location_lat"
-    t.text     "branch"
-    t.text     "address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "categories", force: true do |t|
     t.text "name"
   end
 
   create_table "promos", force: true do |t|
     t.text     "lanacionid"
-    t.integer  "business_id"
     t.integer  "category_id"
+    t.float    "lat"
+    t.float    "lon"
     t.text     "subcategory"
     t.text     "description"
     t.text     "card"
@@ -59,11 +50,14 @@ ActiveRecord::Schema.define(version: 20150411045707) do
     t.text     "date_from"
     t.text     "date_to"
     t.text     "image"
+    t.integer  "business_id"
+    t.text     "business_name"
+    t.text     "business_branch"
+    t.text     "business_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "promos", ["business_id"], name: "index_promos_on_business_id", using: :btree
   add_index "promos", ["category_id"], name: "index_promos_on_category_id", using: :btree
   add_index "promos", ["lanacionid"], name: "index_promos_on_lanacionid", unique: true, using: :btree
 
