@@ -11,14 +11,17 @@ class ApiPromosController < ApplicationController
   end
 
   def find_by_location
+
     lat = params[:latitud].to_f
     lon = params[:longitud].to_f
-    distance = (params[:distancia].nil? ? 200 : params[:distancia].to_i) / 1000
+    distance = (params[:distancia].nil? ? 200 : params[:distancia].to_i) / 1000.0
     promos = Promo.within(distance, origin: [lat, lon]).limit(30)
-    if promos.size < 30
-      api_promos = Promo.from_api(distance, lat, lon)
-      promos += api_promos
-    end
+
+    # promos = []
+    # if promos.size < 30
+    #   api_promos = Promo.from_api(params[:distancia], lat, lon)
+    #   promos += api_promos
+    # end
     render json: promos.map { |p| format_promo(p) }
   end
 
