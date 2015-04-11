@@ -16,13 +16,13 @@ namespace :lanacion do
     200.times do |lat_decimal|
       150.times do |lon_decimal|
         print "."
-        process_url(url + "-34.#{600 + lat_decimal}/-58.#{450 + lon_decimal}/1000")
+        process_url(url + "-34.#{580 + lat_decimal}/-58.#{408 + lon_decimal}/1000")
         print "."
-        process_url(url + "-34.#{600 + lat_decimal}/-58.#{450 - lon_decimal}/1000")
+        process_url(url + "-34.#{580 + lat_decimal}/-58.#{408 - lon_decimal}/1000")
         print "."
-        process_url(url + "-34.#{600 - lat_decimal}/-58.#{450 + lon_decimal}/1000")
+        process_url(url + "-34.#{580 - lat_decimal}/-58.#{408 + lon_decimal}/1000")
         print "."
-        process_url(url + "-34.#{600 - lat_decimal}/-58.#{450 - lon_decimal}/1000")
+        process_url(url + "-34.#{580 - lat_decimal}/-58.#{408 - lon_decimal}/1000")
       end
       puts "stats: promos -> #{Promo.count}"
     end

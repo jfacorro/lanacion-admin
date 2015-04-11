@@ -11,7 +11,7 @@ class Promo < ActiveRecord::Base
 
   scope :active, -> { where('? BETWEEN date_from AND date_to', Time.now) }
 
-  after_create :send_notification
+  # after_create :send_notification
 
   def self.from_api(distance, lat, lon)
     url = "http://23.23.128.233:8080/api/geo/#{lat}/#{lon}/#{distance}"

@@ -1,2 +1,2 @@
 APN = Houston::Client.development
-APN.certificate = File.read("config/cert.pem")
+APN.certificate = File.read("config/apns-dev-cert.pem")
