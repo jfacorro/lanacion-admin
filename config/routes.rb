@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :admins
+  # devise_for :admin
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   get '/api/geo/:latitud/:longitud(/:distancia)', :to => 'api_promos#find_by_location', :constraints => {:latitud => /\-*\d+.\d+/ , :longitud => /\-*\d+.\d+/ , :distancia => /\d+/}

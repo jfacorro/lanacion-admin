@@ -32,3 +32,5 @@ gem 'rails_admin'
 gem 'activerecord-postgresql-adapter'
 
 gem 'httparty'
+
+gem 'devise'
