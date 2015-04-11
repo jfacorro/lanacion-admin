@@ -21,7 +21,7 @@ class Promo < ActiveRecord::Base
     body.each do |promo_from_api|
       establecimiento = promo_from_api["establecimiento"]
       lat, lon = promo_from_api["point"]
-      promo = Promo.find_or_create(
+      promo = Promo.find_or_create_by(
         lanacionid: promo_from_api["id"],
         lat: lat.to_f,
         lon: lon.to_f,
