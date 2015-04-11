@@ -34,3 +34,5 @@ gem 'activerecord-postgresql-adapter'
 gem 'httparty'
 
 gem 'devise'
+
+gem 'geokit-rails'

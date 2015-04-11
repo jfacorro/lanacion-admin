@@ -11,16 +11,11 @@ class ApiPromosController < ApplicationController
   end
 
   def find_by_location
-    distance = (params[:distancia].nil? ? params[:distancia] : 200) / 1000
     lat = params[:latitud].to_f
-    lng = params[:longitud].to_f
-
-    delta_lat = (distance / 6378) * (180 / Math::PI);
-    delta_lng = (distance / 6378) * (180 / Math::PI) / Math.cos(lat * Math::PI / 180);
-
-    promos = Promo.joins(:business)
-      .where('(location_lat BETWEEN ? AND ?) AND (location_lng BETWEEN ? AND ?)', lat - delta_lat, lat + delta_lat, lng - delta_lng, lng + delta_lng)
-      #.active
+    lon = params[:longitud].to_f
+    distance = (params[:distancia].nil? ? params[:distancia] : 200) / 1000
+    businesses = Business.within(distance, origin: [lat, lon])
+    promos = Promo.where(business_id: businesses.collect(&:id)) #.active
     render json: promos.map { |p| format_promo(p) }
   end
 
@@ -29,8 +24,8 @@ class ApiPromosController < ApplicationController
     {
       :_id => promo.lanacionid,
       :id => promo.id.to_s,
-      :point => [promo.business.location_lng,
-                 promo.business.location_lat],
+      :point => [promo.business.location_lat,
+                 promo.business.location_lng],
       :imagen => promo.image,
       :desde => promo.date_from,
       :hasta => promo.date_to,

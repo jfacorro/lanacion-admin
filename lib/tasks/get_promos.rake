@@ -12,7 +12,7 @@ namespace :lanacion do
         establecimiento = promo["establecimiento"]
         unless business = Business.where(id: establecimiento["id"]).first
           puts "creating business #{establecimiento["nombre"]}"
-          lon, lat = promo["point"]
+          lat, lon = promo["point"]
           business = Business.create(
             id: establecimiento["id"],
             name: establecimiento["nombre"],
