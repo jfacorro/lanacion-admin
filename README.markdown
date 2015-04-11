@@ -4,7 +4,7 @@
 
 * Se puede acceder al admin desde http://lanacion.herokuapp.com/admin
 
-* El user es __lanacion@lanacion.com__ y el password es __lanacion__
+* El admin para acceder es __lanacion@lanacion.com__ con password _lanacion_
 
 * Se pueden visualizar las categorias y las promos disponibles
 
