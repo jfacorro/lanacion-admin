@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410204908) do
+ActiveRecord::Schema.define(version: 20150410191754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,39 +24,29 @@ ActiveRecord::Schema.define(version: 20150410204908) do
     t.text     "address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "image"
   end
 
   create_table "categories", force: true do |t|
-    t.text     "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "promo_types", force: true do |t|
-    t.text     "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text "name"
   end
 
   create_table "promos", force: true do |t|
+    t.text     "lanacionid"
     t.integer  "business_id"
-    t.text     "description"
     t.integer  "category_id"
-    t.integer  "subcategory_id"
+    t.text     "subcategory"
+    t.text     "description"
     t.text     "card"
-    t.integer  "promo_type_id"
+    t.text     "ptype"
+    t.text     "date_from"
+    t.text     "date_to"
+    t.text     "image"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "date_from"
-    t.datetime "date_to"
   end
 
-  create_table "subcategories", force: true do |t|
-    t.text     "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "category_id", default: "nextval('subcategories_category_id_seq'::regclass)", null: false
-  end
+  add_index "promos", ["business_id"], name: "index_promos_on_business_id", using: :btree
+  add_index "promos", ["category_id"], name: "index_promos_on_category_id", using: :btree
+  add_index "promos", ["lanacionid"], name: "index_promos_on_lanacionid", unique: true, using: :btree
 
 end
