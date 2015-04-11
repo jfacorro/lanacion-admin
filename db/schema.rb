@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20150411112139) do
     t.datetime "updated_at"
   end
 
+  add_index "apns_tokens", ["device_id"], name: "index_apns_tokens_on_device_id", unique: true, using: :btree
+
   create_table "categories", force: true do |t|
     t.text "name"
   end

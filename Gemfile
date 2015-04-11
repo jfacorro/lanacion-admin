@@ -38,3 +38,5 @@ gem 'devise'
 gem 'geokit-rails'
 
 gem 'houston'
+
+gem 'bootstrap-sass'
