@@ -1,28 +1,11 @@
-== README
+## Club La Nacion Admin
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Este es el servidor para el Hackaton de La Nacion. 
 
-Things you may want to cover:
+* Se puede acceder al admin desde http://lanacion.herokuapp.com/admin
 
-* Ruby version
+* El user es __lanacion@lanacion.com__ y el password es __lanacion__
 
-* System dependencies
+* Se pueden visualizar las categorias y las promos disponibles
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Tambien se pueden agregar nuevas promos y productos.
