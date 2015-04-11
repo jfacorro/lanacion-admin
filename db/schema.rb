@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411045707) do
+ActiveRecord::Schema.define(version: 20150411105344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 20150411045707) do
     t.text     "description"
     t.text     "card"
     t.text     "ptype"
-    t.text     "date_from"
-    t.text     "date_to"
+    t.datetime "date_from"
+    t.datetime "date_to"
     t.text     "image"
     t.integer  "business_id"
     t.text     "business_name"
