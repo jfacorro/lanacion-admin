@@ -11,6 +11,8 @@ class Promo < ActiveRecord::Base
 
   scope :active, -> { where('? BETWEEN date_from AND date_to', Time.now) }
 
+  after_create :send_notification
+
   def self.from_api(distance, lat, lon)
     url = "http://23.23.128.233:8080/api/geo/#{lat}/#{lon}/#{distance}"
     response = HTTParty.get(URI.escape(url))
@@ -41,5 +43,14 @@ class Promo < ActiveRecord::Base
     end
     
     promos
+  end
+
+  def send_notification
+    ApnsToken.all.each do |apns_token|
+      notification = Houston::Notification.new(device: apns_token.apns_token)
+      notification.alert = "Nueva Promo: #{description} - #{ptype}"
+      notification.custom_data = self
+      APN.push(notification)
+    end
   end
 end
