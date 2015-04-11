@@ -9,7 +9,7 @@ default: &default
   pool: 5
   ending: utf8
   timeout: 5000
-  user: jfacorro
+  user: amilkr
   password:
   host: localhost
 
